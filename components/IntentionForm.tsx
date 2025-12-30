@@ -18,52 +18,61 @@ export function IntentionForm({ onSubmit, loading }: IntentionFormProps) {
   }
 
   const suggestions = [
-    'Find balance between work and adventure',
-    'Build something meaningful',
-    'Embrace uncertainty with courage',
-    'Connect deeply with others',
+    'Find balance',
+    'Build & create',
+    'Adventure awaits',
+    'Deep connections',
+    'Grow stronger',
+    'Inner peace',
   ]
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-2">
-        <label htmlFor="intention" className="block text-lg">
-          What do you want 2025 to be about?
+      {/* Card container */}
+      <div className="washi-paper rounded-2xl p-6 sm:p-8">
+        <label
+          htmlFor="intention"
+          className="block font-japanese text-lg sm:text-xl text-[var(--color-deep)] mb-5 text-center"
+        >
+          What do you want 2026 to be about?
         </label>
+
         <textarea
           id="intention"
           value={intention}
           onChange={(e) => setIntention(e.target.value)}
           placeholder="Describe your intentions, goals, or the energy you want to bring into the new year..."
-          className="w-full p-4 rounded-lg border border-stone-300 bg-white/80 backdrop-blur
-                     focus:ring-2 focus:ring-stone-500 focus:border-transparent
-                     min-h-[120px] resize-none"
+          className="input-field min-h-[100px] sm:min-h-[110px] text-center text-sm sm:text-base"
           disabled={loading}
         />
+
+        {/* Suggestion chips */}
+        <div className="flex flex-wrap gap-2 justify-center mt-5">
+          {suggestions.map((suggestion) => (
+            <button
+              key={suggestion}
+              type="button"
+              onClick={() => setIntention(suggestion)}
+              className="chip"
+              disabled={loading}
+            >
+              {suggestion}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 justify-center">
-        {suggestions.map((suggestion) => (
-          <button
-            key={suggestion}
-            type="button"
-            onClick={() => setIntention(suggestion)}
-            className="text-sm px-3 py-1 rounded-full bg-stone-200 hover:bg-stone-300
-                       transition-colors"
-          >
-            {suggestion}
-          </button>
-        ))}
-      </div>
-
+      {/* Submit button */}
       <button
         type="submit"
         disabled={loading || !intention.trim()}
-        className="w-full py-3 px-6 rounded-lg bg-stone-800 text-white font-medium
-                   hover:bg-stone-700 disabled:opacity-50 disabled:cursor-not-allowed
-                   transition-colors"
+        className="btn-primary w-full text-base sm:text-lg"
       >
-        {loading ? 'Finding your kanji...' : 'Reveal My 2025 Kanji'}
+        {loading ? (
+          <span className="loading-dots">Finding your kanji</span>
+        ) : (
+          'Reveal My 2026 Kanji'
+        )}
       </button>
     </form>
   )

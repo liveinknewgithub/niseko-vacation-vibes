@@ -1,8 +1,47 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { KanjiDisplay } from '@/components/KanjiDisplay'
 import { IntentionForm } from '@/components/IntentionForm'
+
+function SnowParticles() {
+  const [particles, setParticles] = useState<Array<{
+    id: number
+    left: number
+    delay: number
+    duration: number
+    size: number
+  }>>([])
+
+  useEffect(() => {
+    const newParticles = Array.from({ length: 35 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      delay: Math.random() * 10,
+      duration: 8 + Math.random() * 12,
+      size: 2 + Math.random() * 4,
+    }))
+    setParticles(newParticles)
+  }, [])
+
+  return (
+    <div className="snow-particles">
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="snow-particle"
+          style={{
+            left: `${p.left}%`,
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            animationDelay: `${p.delay}s`,
+            animationDuration: `${p.duration}s`,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
 
 export default function Home() {
   const [kanji, setKanji] = useState<{
@@ -31,26 +70,50 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-8">
-      <div className="max-w-2xl w-full text-center space-y-8">
-        <header className="space-y-2">
-          <h1 className="text-4xl font-bold">2025 in Kanji</h1>
-          <p className="text-stone-600">
-            Your year, distilled into one character
+    <main className="min-h-screen flex flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8 relative">
+      <SnowParticles />
+      <div className="mountain-silhouette" />
+
+      <div className="w-full max-w-md mx-auto relative z-10">
+        {/* Header */}
+        <header className="text-center mb-10 sm:mb-12 fade-in">
+          <div className="inline-flex items-center gap-3 mb-4">
+            <div className="h-px w-8 sm:w-12 bg-gradient-to-r from-transparent to-white/50" />
+            <span className="text-xs sm:text-sm tracking-[0.2em] text-white/80 uppercase font-medium">
+              New Year
+            </span>
+            <div className="h-px w-8 sm:w-12 bg-gradient-to-l from-transparent to-white/50" />
+          </div>
+
+          <h1 className="font-japanese text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-3 drop-shadow-lg">
+            2026 in Kanji
+          </h1>
+
+          <p className="text-white/70 text-base sm:text-lg max-w-md mx-auto">
+            Your year ahead, distilled into one character
           </p>
+
+          {/* Gold accent line */}
+          <div className="gold-accent w-24 mx-auto mt-6" />
         </header>
 
-        {!kanji ? (
-          <IntentionForm onSubmit={generateKanji} loading={loading} />
-        ) : (
-          <KanjiDisplay
-            kanji={kanji}
-            onReset={() => setKanji(null)}
-          />
-        )}
+        {/* Main Content */}
+        <div className="fade-in" style={{ animationDelay: '0.1s' }}>
+          {!kanji ? (
+            <IntentionForm onSubmit={generateKanji} loading={loading} />
+          ) : (
+            <KanjiDisplay
+              kanji={kanji}
+              onReset={() => setKanji(null)}
+            />
+          )}
+        </div>
 
-        <footer className="text-sm text-stone-500 pt-8">
-          Made with vacation vibes in Niseko, Japan
+        {/* Footer */}
+        <footer className="text-center mt-12 sm:mt-16 fade-in" style={{ animationDelay: '0.2s' }}>
+          <p className="text-sm text-white/50">
+            Made with vacation vibes in Niseko, Japan
+          </p>
         </footer>
       </div>
     </main>

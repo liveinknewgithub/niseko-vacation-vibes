@@ -2,23 +2,334 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;700;900&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Niseko winter palette */
+  --color-snow: #ffffff;
+  --color-ice: #e8f4f8;
+  --color-frost: #c5dde8;
+  --color-sky: #7eb8d8;
+  --color-mountain: #3a7ca5;
+  --color-deep: #1e4d6b;
+
+  /* Japanese accent colors */
+  --color-vermillion: #d94f3d;
+  --color-gold: #c9a227;
+  --color-ink: #1a1a1a;
+
+  /* A16Z coral */
+  --color-coral: #ff6b5b;
+  --color-coral-light: #ff8a7a;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 body {
+  font-family: 'Inter', sans-serif;
+}
+
+.font-japanese {
   font-family: 'Noto Serif JP', serif;
 }
 
-.washi-texture {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-blend-mode: soft-light;
+/* Beautiful gradient background - Niseko sky to snow */
+.gradient-bg {
+  background: linear-gradient(
+    165deg,
+    var(--color-deep) 0%,
+    var(--color-mountain) 25%,
+    var(--color-sky) 50%,
+    var(--color-frost) 75%,
+    var(--color-ice) 100%
+  );
+  min-height: 100vh;
+  position: relative;
 }
 
-.kanji-display {
-  font-size: 12rem;
+/* Subtle snow/mountain texture overlay */
+.gradient-bg::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+/* Floating snow particles */
+.snow-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.snow-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: snowfall linear infinite;
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Washi paper card */
+.washi-paper {
+  position: relative;
+  background: linear-gradient(135deg, #ffffff 0%, #fefefe 50%, #fafafa 100%);
+  box-shadow:
+    0 4px 6px rgba(30, 77, 107, 0.08),
+    0 10px 20px rgba(30, 77, 107, 0.06),
+    0 20px 40px rgba(30, 77, 107, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.washi-paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Kanji character display */
+.kanji-character {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 900;
+  font-size: clamp(6rem, 22vw, 10rem);
   line-height: 1;
-  font-weight: 700;
+  background: linear-gradient(
+    135deg,
+    var(--color-ink) 0%,
+    var(--color-deep) 50%,
+    var(--color-mountain) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(3px 3px 6px rgba(30, 77, 107, 0.2));
+  animation: kanjiReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.brush-stroke {
-  filter: url(#brush-filter);
+@keyframes kanjiReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Red hanko seal */
+.hanko {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, var(--color-coral) 0%, var(--color-vermillion) 100%);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  color: white;
+  transform: rotate(-8deg);
+  box-shadow:
+    0 4px 12px rgba(217, 79, 61, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  letter-spacing: 0.05em;
+}
+
+/* Gold accent line */
+.gold-accent {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-gold) 20%,
+    var(--color-gold) 80%,
+    transparent 100%
+  );
+}
+
+/* Coral/A16Z accent button */
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-coral) 0%, var(--color-vermillion) 100%);
+  color: white;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow:
+    0 4px 14px rgba(255, 107, 91, 0.4),
+    0 2px 6px rgba(255, 107, 91, 0.2);
+  border: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 20px rgba(255, 107, 91, 0.5),
+    0 4px 10px rgba(255, 107, 91, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Mountain blue secondary button */
+.btn-secondary {
+  background: transparent;
+  color: var(--color-deep);
+  font-weight: 500;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  border: 2px solid var(--color-frost);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-secondary:hover {
+  background: var(--color-ice);
+  border-color: var(--color-sky);
+}
+
+/* Form input with frost border */
+.input-field {
+  width: 100%;
+  padding: 1.25rem;
+  border: 2px solid var(--color-frost);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  resize: none;
+  color: var(--color-deep);
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--color-sky);
+  box-shadow: 0 0 0 4px rgba(126, 184, 216, 0.2);
+}
+
+.input-field::placeholder {
+  color: var(--color-sky);
+}
+
+/* Suggestion chips with winter colors */
+.chip {
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--color-frost);
+  color: var(--color-mountain);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+
+.chip:hover {
+  background: white;
+  border-color: var(--color-coral);
+  color: var(--color-coral);
+  transform: translateY(-1px);
+}
+
+/* Loading animation with coral */
+.loading-dots::after {
+  content: '';
+  animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 100% { content: '...'; }
+}
+
+/* Fade in animation */
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Decorative mountain silhouette */
+.mountain-silhouette {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(
+    to top,
+    rgba(30, 77, 107, 0.15) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,120 L0,80 L150,40 L300,70 L450,20 L600,60 L750,10 L900,50 L1050,25 L1200,55 L1200,120 Z' fill='black'/%3E%3C/svg%3E");
+  mask-size: cover;
+  mask-position: bottom;
+}
+
+/* Text colors */
+.text-mountain {
+  color: var(--color-mountain);
+}
+
+.text-deep {
+  color: var(--color-deep);
+}
+
+.text-coral {
+  color: var(--color-coral);
+}
+
+.text-gold {
+  color: var(--color-gold);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .kanji-character {
+    font-size: clamp(5rem, 35vw, 8rem);
+  }
+
+  .hanko {
+    width: 40px;
+    height: 40px;
+    font-size: 0.55rem;
+  }
 }
