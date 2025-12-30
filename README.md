@@ -1,6 +1,6 @@
 # Niseko Vacation Vibes
 
-Viral marketing project ideas - brainstormed in Niseko, Japan on NYE 2024.
+Viral marketing project ideas - brainstormed in Niseko, Japan on NYE 2025.
 
 **Goal:** Create something beautiful, shareable, and attention-grabbing that A16Z might actually fund.
 
@@ -14,7 +14,7 @@ Viral marketing project ideas - brainstormed in Niseko, Japan on NYE 2024.
 
 ## Ideas
 
-### 1. 2025 in Kanji ⭐ (Top Pick)
+### 1. 2026 in Kanji ⭐ (Top Pick)
 
 User enters their 2025 intentions/vibe, AI generates a custom kanji character + meaning representing their year. Beautiful brush calligraphy output on washi paper texture.
 
@@ -50,7 +50,7 @@ Japanese hot spring fortune teller for 2025. Mystical UI with steam animations, 
 
 ---
 
-### 3. Hatsuhinode Generator (First Sunrise 2025)
+### 3. Hatsuhinode Generator (First Sunrise 2026)
 
 Based on Japanese tradition of watching the first sunrise of the year (hatsuhinode). AI generates personalized sunrise artwork based on your 2025 word/intention.
 
