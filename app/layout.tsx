@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'The Onsen Oracle | Your 2025 Fortune Awaits',
-  description: 'Soak in your destiny. Let the ancient wisdom of the hot springs reveal your 2025 fortune.',
+  title: 'The Onsen Oracle | Your 2026 Fortune Awaits',
+  description: 'Soak in your destiny. Let the ancient wisdom of the hot springs reveal your 2026 fortune.',
   openGraph: {
     title: 'The Onsen Oracle',
     description: 'Soak in your destiny',
@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-slate-900 text-white min-h-screen overflow-x-hidden">
+      <body className="min-h-screen overflow-x-hidden">
         {children}
       </body>
     </html>

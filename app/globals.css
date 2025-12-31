@@ -2,76 +2,236 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap');
 
-body {
-  font-family: 'Noto Serif JP', serif;
-  background: linear-gradient(to bottom, #0f172a, #1e293b);
+:root {
+  --color-deep: #1a0a0a;
+  --color-warm-dark: #2d1810;
+  --color-amber: #d97706;
+  --color-gold: #fbbf24;
+  --color-cream: #fef3c7;
 }
 
-.steam {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(ellipse at bottom, #2d1810 0%, #1a0a0a 50%, #0d0505 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.font-japanese {
+  font-family: 'Noto Serif JP', serif;
+}
+
+/* Steam/mist effect */
+.steam-container {
+  position: fixed;
+  inset: 0;
   pointer-events: none;
   overflow: hidden;
 }
 
 .steam-particle {
   position: absolute;
-  bottom: 0;
-  width: 40px;
-  height: 40px;
-  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+  bottom: -20px;
   border-radius: 50%;
-  animation: rise 8s infinite ease-out;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 40%, transparent 70%);
+  animation: steam-rise linear infinite;
+  filter: blur(3px);
 }
 
-@keyframes rise {
+@keyframes steam-rise {
   0% {
-    transform: translateY(0) scale(1);
+    transform: translateY(0) translateX(0) scale(1);
     opacity: 0;
   }
-  10% {
-    opacity: 0.5;
+  15% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.4;
   }
   100% {
-    transform: translateY(-100vh) scale(2);
+    transform: translateY(-100vh) translateX(40px) scale(2.5);
     opacity: 0;
   }
 }
 
-.fortune-card {
-  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fef3c7 100%);
+/* Water surface effect at bottom */
+.water-surface {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 250px;
+  background: linear-gradient(
+    to top,
+    rgba(217, 119, 6, 0.2) 0%,
+    rgba(217, 119, 6, 0.1) 30%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.water-surface::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, rgba(251, 191, 36, 0.5) 50%, transparent 100%);
+}
+
+/* Card styles */
+.oracle-card {
+  background: linear-gradient(135deg, rgba(45, 24, 16, 0.95) 0%, rgba(26, 10, 10, 0.98) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.15);
+  backdrop-filter: blur(10px);
   box-shadow:
-    0 0 30px rgba(251, 191, 36, 0.3),
-    inset 0 0 30px rgba(255, 255, 255, 0.3);
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(217, 119, 6, 0.1),
+    inset 0 1px 0 rgba(251, 191, 36, 0.1);
 }
 
-.mystical-glow {
-  animation: glow 3s ease-in-out infinite alternate;
+/* Fortune card - golden paper look */
+.fortune-card {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 30%, #fcd34d 60%, #fde68a 100%);
+  box-shadow:
+    0 8px 32px rgba(251, 191, 36, 0.3),
+    0 0 80px rgba(251, 191, 36, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 0.5);
+  position: relative;
 }
 
-@keyframes glow {
+.fortune-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Glowing button */
+.btn-oracle {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  color: white;
+  font-weight: 600;
+  padding: 1.125rem 3rem;
+  border-radius: 9999px;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow:
+    0 0 30px rgba(217, 119, 6, 0.5),
+    0 4px 20px rgba(0, 0, 0, 0.4);
+  animation: button-glow 3s ease-in-out infinite;
+}
+
+@keyframes button-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 30px rgba(217, 119, 6, 0.5),
+      0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 0 50px rgba(251, 191, 36, 0.6),
+      0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.btn-oracle:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 0 50px rgba(251, 191, 36, 0.7),
+    0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.btn-oracle:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  animation: none;
+}
+
+/* Share button */
+.btn-share {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  color: white;
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
+}
+
+.btn-share:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.4);
+}
+
+/* Secondary button */
+.btn-secondary {
+  background: transparent;
+  color: var(--color-cream);
+  font-weight: 500;
+  padding: 0.875rem 2rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.5);
+}
+
+/* Text glow */
+.text-glow {
+  text-shadow: 0 0 40px rgba(251, 191, 36, 0.4);
+}
+
+/* Fade in animation */
+.fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Fortune reveal */
+.fortune-reveal {
+  animation: fortuneReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes fortuneReveal {
   from {
-    box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
   }
   to {
-    box-shadow: 0 0 40px rgba(251, 191, 36, 0.6);
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
-.water-ripple {
-  animation: ripple 2s ease-out infinite;
+/* Loading pulse */
+.loading-pulse {
+  animation: loadingPulse 1.5s ease-in-out infinite;
 }
 
-@keyframes ripple {
-  0% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(2);
-    opacity: 0;
-  }
+@keyframes loadingPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }

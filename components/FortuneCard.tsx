@@ -1,7 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
-
 interface FortuneCardProps {
   fortune: {
     fortune: string
@@ -13,7 +11,7 @@ interface FortuneCardProps {
 }
 
 export function FortuneCard({ fortune, onReset }: FortuneCardProps) {
-  const shareText = `The Onsen Oracle spoke: "${fortune.fortune}" My element is ${fortune.element}. What's your 2025 fortune?`
+  const shareText = `The Onsen Oracle spoke: "${fortune.fortune}" My element is ${fortune.element}. What's your 2026 fortune?`
   const shareUrl = typeof window !== 'undefined' ? window.location.href : ''
 
   const handleShare = async () => {
@@ -32,59 +30,50 @@ export function FortuneCard({ fortune, onReset }: FortuneCardProps) {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50, rotateX: -20 }}
-      animate={{ opacity: 1, y: 0, rotateX: 0 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
-      className="space-y-6"
-    >
-      <div className="fortune-card rounded-2xl p-8 text-slate-800 max-w-md mx-auto">
-        <div className="text-sm uppercase tracking-widest text-amber-700 mb-4">
-          Your 2025 Fortune
+    <div className="fortune-reveal">
+      <div className="fortune-card rounded-2xl p-6 sm:p-8 text-amber-900 mb-6">
+        <div className="text-center mb-6">
+          <div className="text-xs uppercase tracking-[0.2em] text-amber-700/70 mb-2">
+            Your 2026 Fortune
+          </div>
+          <div className="h-px w-16 mx-auto bg-gradient-to-r from-transparent via-amber-600/40 to-transparent" />
         </div>
 
-        <blockquote className="text-2xl font-medium leading-relaxed mb-6">
+        <blockquote className="font-japanese text-xl sm:text-2xl font-medium leading-relaxed mb-8 text-center">
           "{fortune.fortune}"
         </blockquote>
 
-        <div className="grid grid-cols-2 gap-4 text-sm border-t border-amber-300 pt-4">
-          <div>
-            <div className="text-amber-600 uppercase tracking-wide">Element</div>
-            <div className="font-medium">{fortune.element}</div>
+        <div className="grid grid-cols-2 gap-4 text-sm border-t border-amber-400/30 pt-5">
+          <div className="text-center">
+            <div className="text-amber-700/60 uppercase tracking-wider text-xs mb-1">Element</div>
+            <div className="font-japanese font-semibold text-amber-900">{fortune.element}</div>
           </div>
-          <div>
-            <div className="text-amber-600 uppercase tracking-wide">Lucky Number</div>
-            <div className="font-medium">{fortune.luckyNumber}</div>
+          <div className="text-center">
+            <div className="text-amber-700/60 uppercase tracking-wider text-xs mb-1">Lucky Number</div>
+            <div className="font-japanese font-semibold text-amber-900">{fortune.luckyNumber}</div>
           </div>
         </div>
 
-        <div className="mt-4 pt-4 border-t border-amber-300">
-          <div className="text-amber-600 uppercase tracking-wide text-sm">Guidance</div>
-          <p className="text-sm mt-1">{fortune.advice}</p>
+        <div className="mt-5 pt-5 border-t border-amber-400/30">
+          <div className="text-amber-700/60 uppercase tracking-wider text-xs mb-2 text-center">Guidance</div>
+          <p className="text-sm text-amber-800 text-center leading-relaxed">{fortune.advice}</p>
         </div>
       </div>
 
-      <div className="flex gap-4 justify-center">
-        <motion.button
+      <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        <button
           onClick={handleShare}
-          className="py-2 px-6 rounded-full bg-amber-500 text-white font-medium
-                     hover:bg-amber-400 transition-colors"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          className="btn-share"
         >
           Share Fortune
-        </motion.button>
-        <motion.button
+        </button>
+        <button
           onClick={onReset}
-          className="py-2 px-6 rounded-full border border-slate-500 text-slate-300
-                     hover:bg-slate-800 transition-colors"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          className="btn-secondary"
         >
           Seek Again
-        </motion.button>
+        </button>
       </div>
-    </motion.div>
+    </div>
   )
 }
