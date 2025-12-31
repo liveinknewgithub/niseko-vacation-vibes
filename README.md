@@ -46,7 +46,7 @@ This was one of 5 viral marketing ideas brainstormed in Niseko:
 
 | Idea | Status |
 |------|--------|
-| 2025 in Kanji | Branch: `kanji-2025` |
+| 2026 in Kanji | Branch: `kanji-2025` |
 | **The Onsen Oracle** | **Chosen** |
 | Hatsuhinode Generator | Branch: `hatsuhinode` |
 | Powder Promise | Branch: `powder-promise` |
