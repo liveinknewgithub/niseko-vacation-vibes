@@ -2,7 +2,7 @@
 
 **Soak in your destiny.** A mystical Japanese hot spring fortune teller for 2026.
 
-Built with vacation vibes in Niseko, Japan on NYE 2024.
+Built with vacation vibes in Niseko, Japan on NYE 2025.
 
 ---
 
