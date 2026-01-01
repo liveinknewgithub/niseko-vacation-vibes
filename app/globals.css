@@ -235,3 +235,137 @@ body {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
 }
+
+/* ===== SPEEDRUN SKIING STYLES ===== */
+
+/* Skiing color utilities */
+.text-ski-orange {
+  color: #F97316;
+}
+
+.text-ski-light {
+  color: #CBD5E1;
+}
+
+.text-ski-muted {
+  color: #64748B;
+}
+
+.bg-ski-orange {
+  background-color: #F97316;
+}
+
+/* Ski page background */
+.ski-bg {
+  background: linear-gradient(180deg, #0F172A 0%, #1E293B 40%, #334155 100%);
+}
+
+/* Mountain silhouette overlay */
+.mountain-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(
+    to top,
+    rgba(30, 41, 59, 0.8) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Snow particle effect */
+.snow-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.snow-particle {
+  position: absolute;
+  top: -10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  animation: snow-fall linear infinite;
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) translateX(20px);
+    opacity: 0.3;
+  }
+}
+
+/* Ski game card */
+.ski-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(249, 115, 22, 0.05),
+    inset 0 1px 0 rgba(148, 163, 184, 0.1);
+}
+
+/* Ski primary button */
+.btn-ski {
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+  color: white;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow:
+    0 0 20px rgba(249, 115, 22, 0.4),
+    0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-ski:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 30px rgba(249, 115, 22, 0.5),
+    0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Ski secondary button */
+.btn-ski-secondary {
+  background: transparent;
+  color: #CBD5E1;
+  font-weight: 500;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-ski-secondary:hover {
+  background: rgba(148, 163, 184, 0.1);
+  border-color: rgba(148, 163, 184, 0.5);
+}
+
+/* Term sheet styling */
+.term-sheet {
+  background: linear-gradient(135deg, #FEFEFE 0%, #F8FAFC 100%);
+  border: 2px solid #E2E8F0;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  position: relative;
+}
+
+.term-sheet::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #F97316, #EAB308, #22C55E);
+}
