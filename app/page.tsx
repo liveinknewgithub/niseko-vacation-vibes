@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { FortuneCard } from '@/components/FortuneCard'
 import { ParticleEffect } from '@/components/ParticleEffect'
@@ -13,14 +13,19 @@ export default function Home() {
     luckyNumber: number
   } | null>(null)
   const [loading, setLoading] = useState(false)
-  const [steamTaps, setSteamTaps] = useState(0)
   const [showSkiLift, setShowSkiLift] = useState(false)
+  const longPressTimer = useRef<NodeJS.Timeout | null>(null)
 
-  const handleSteamTap = () => {
-    const newCount = steamTaps + 1
-    setSteamTaps(newCount)
-    if (newCount >= 5 && !showSkiLift) {
+  const handlePressStart = () => {
+    longPressTimer.current = setTimeout(() => {
       setShowSkiLift(true)
+    }, 2000)
+  }
+
+  const handlePressEnd = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current)
+      longPressTimer.current = null
     }
   }
 
@@ -45,16 +50,14 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4 py-12 relative">
-      <div onClick={handleSteamTap} className="cursor-default">
-        <ParticleEffect
-          count={25}
-          direction="up"
-          sizeRange={[30, 90]}
-          durationRange={[8, 14]}
-          className="steam-particle"
-          containerClassName="steam-container"
-        />
-      </div>
+      <ParticleEffect
+        count={25}
+        direction="up"
+        sizeRange={[30, 90]}
+        durationRange={[8, 14]}
+        className="steam-particle"
+        containerClassName="steam-container"
+      />
       <div className="water-surface" />
 
       {showSkiLift && (
@@ -98,6 +101,11 @@ export default function Home() {
             <div className="text-center">
               <button
                 onClick={seekFortune}
+                onMouseDown={handlePressStart}
+                onMouseUp={handlePressEnd}
+                onMouseLeave={handlePressEnd}
+                onTouchStart={handlePressStart}
+                onTouchEnd={handlePressEnd}
                 disabled={loading}
                 className="btn-oracle text-lg"
               >
@@ -121,6 +129,13 @@ export default function Home() {
           <p className="text-sm" style={{ color: '#d97706' }}>
             Wisdom from the hot springs of Niseko
           </p>
+          <Link
+            href="/speedrun"
+            className="inline-block mt-3 text-lg opacity-40 hover:opacity-100 transition-opacity"
+            title="The mountain awaits..."
+          >
+            🎿
+          </Link>
         </footer>
       </div>
     </main>
