@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { FortuneCard } from '@/components/FortuneCard'
 import { ParticleEffect } from '@/components/ParticleEffect'
 
@@ -12,6 +13,16 @@ export default function Home() {
     luckyNumber: number
   } | null>(null)
   const [loading, setLoading] = useState(false)
+  const [steamTaps, setSteamTaps] = useState(0)
+  const [showSkiLift, setShowSkiLift] = useState(false)
+
+  const handleSteamTap = () => {
+    const newCount = steamTaps + 1
+    setSteamTaps(newCount)
+    if (newCount >= 5 && !showSkiLift) {
+      setShowSkiLift(true)
+    }
+  }
 
   const seekFortune = async () => {
     setLoading(true)
@@ -34,15 +45,27 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4 py-12 relative">
-      <ParticleEffect
-        count={25}
-        direction="up"
-        sizeRange={[30, 90]}
-        durationRange={[8, 14]}
-        className="steam-particle"
-        containerClassName="steam-container"
-      />
+      <div onClick={handleSteamTap} className="cursor-default">
+        <ParticleEffect
+          count={25}
+          direction="up"
+          sizeRange={[30, 90]}
+          durationRange={[8, 14]}
+          className="steam-particle"
+          containerClassName="steam-container"
+        />
+      </div>
       <div className="water-surface" />
+
+      {showSkiLift && (
+        <Link
+          href="/speedrun"
+          className="fixed top-4 right-4 z-50 text-3xl animate-bounce hover:scale-125 transition-transform"
+          title="Take the ski lift..."
+        >
+          🚡
+        </Link>
+      )}
 
       <div className="w-full max-w-md mx-auto relative z-10">
         {/* Header */}

@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { share, getPageUrl } from '@/lib/share'
 
 interface FortuneCardProps {
@@ -47,6 +48,15 @@ export function FortuneCard({ fortune, onReset }: FortuneCardProps) {
           <div className="text-amber-700/60 uppercase tracking-wider text-xs mb-2 text-center">Guidance</div>
           <p className="text-sm text-amber-800 text-center leading-relaxed">{fortune.advice}</p>
         </div>
+
+        {fortune.luckyNumber === 69 && (
+          <Link href="/speedrun" className="block mt-5 pt-5 border-t border-amber-400/30 group">
+            <div className="text-amber-700/60 uppercase tracking-wider text-xs mb-2 text-center">Secret Path</div>
+            <p className="text-sm text-amber-800 text-center leading-relaxed group-hover:text-amber-600 transition-colors">
+              The mountain calls to you... ⛷️
+            </p>
+          </Link>
+        )}
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
