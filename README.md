@@ -24,6 +24,10 @@ The Onsen Oracle is a beautiful, shareable fortune teller inspired by Japanese o
 - Native share functionality (or Twitter fallback)
 - Mobile and desktop optimized
 
+## Bonus: A16Z Speedrun
+
+Hidden at `/speedrun` is a ski game mini-game. Dodge trees and rocks for 69 seconds to beat Andrew Chen's run and receive a mock VC term sheet. Features isometric pixel art, snow effects, and increasing difficulty.
+
 ## Tech Stack
 
 - **Framework:** Next.js 14 (App Router)
