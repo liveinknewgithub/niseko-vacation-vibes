@@ -1,16 +1,16 @@
 'use client'
 
+import { shareToTwitter, getPageUrl } from '@/lib/share'
+
 interface TermSheetProps {
   time: number
   onPlayAgain: () => void
 }
 
 export function TermSheet({ time, onPlayAgain }: TermSheetProps) {
-  const shareOnTwitter = () => {
-    const text = `I beat Andrew Chen in A16Z Speedrun! Survived ${time.toFixed(2)}s on the slopes. Secured the bag. ⛷️🏔️`
-    const url = typeof window !== 'undefined' ? window.location.href : ''
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
-    window.open(twitterUrl, '_blank', 'width=550,height=420')
+  const handleShare = () => {
+    const text = `I beat Andrew Chen in A16Z Speedrun! Survived ${time.toFixed(2)}s on the slopes. Secured the bag.`
+    shareToTwitter(text, getPageUrl())
   }
 
   return (
@@ -35,7 +35,7 @@ export function TermSheet({ time, onPlayAgain }: TermSheetProps) {
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">Andrew Chen&apos;s Time:</span>
-            <span className="font-semibold text-gray-900">10.00s</span>
+            <span className="font-semibold text-gray-900">69.00s</span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">Status:</span>
@@ -67,7 +67,7 @@ export function TermSheet({ time, onPlayAgain }: TermSheetProps) {
       {/* Actions */}
       <div className="flex flex-col sm:flex-row gap-3">
         <button
-          onClick={shareOnTwitter}
+          onClick={handleShare}
           className="btn-ski flex-1 flex items-center justify-center gap-2"
         >
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

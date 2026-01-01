@@ -1,51 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { SkiGame } from '@/components/SkiGame'
 import { TermSheet } from '@/components/TermSheet'
 import { GameOver } from '@/components/GameOver'
+import { ParticleEffect } from '@/components/ParticleEffect'
 import Link from 'next/link'
 
 type GameState = 'idle' | 'playing' | 'won' | 'crashed'
-
-function SnowEffect() {
-  const [particles, setParticles] = useState<Array<{
-    id: number
-    left: number
-    size: number
-    delay: number
-    duration: number
-  }>>([])
-
-  useEffect(() => {
-    const newParticles = Array.from({ length: 40 }, (_, i) => ({
-      id: i,
-      left: Math.random() * 100,
-      size: 2 + Math.random() * 4,
-      delay: Math.random() * 5,
-      duration: 3 + Math.random() * 4,
-    }))
-    setParticles(newParticles)
-  }, [])
-
-  return (
-    <div className="snow-container">
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          className="snow-particle"
-          style={{
-            left: `${p.left}%`,
-            width: `${p.size}px`,
-            height: `${p.size}px`,
-            animationDelay: `${p.delay}s`,
-            animationDuration: `${p.duration}s`,
-          }}
-        />
-      ))}
-    </div>
-  )
-}
 
 export default function SpeedrunPage() {
   const [gameState, setGameState] = useState<GameState>('idle')
@@ -72,7 +34,14 @@ export default function SpeedrunPage() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4 py-8 relative ski-bg">
-      <SnowEffect />
+      <ParticleEffect
+        count={40}
+        direction="down"
+        sizeRange={[2, 6]}
+        durationRange={[3, 7]}
+        className="snow-particle"
+        containerClassName="snow-container"
+      />
       <div className="mountain-overlay" />
 
       <div className="w-full max-w-lg mx-auto relative z-10">
@@ -82,7 +51,7 @@ export default function SpeedrunPage() {
             A16Z <span className="text-ski-orange">Speedrun</span>
           </h1>
           <p className="text-ski-light text-sm">
-            Beat Andrew Chen&apos;s 10s run. Get a term sheet.
+            Beat Andrew Chen&apos;s 69s run. Get a term sheet.
           </p>
         </header>
 
@@ -92,7 +61,7 @@ export default function SpeedrunPage() {
             <div className="text-center space-y-6">
               <div className="space-y-3">
                 <p className="text-ski-light">
-                  Dodge the trees. Survive 10 seconds.
+                  Dodge the trees. Survive 69 seconds.
                 </p>
                 <p className="text-ski-muted text-sm">
                   Use <span className="text-white">← →</span> arrow keys or tap left/right
@@ -101,7 +70,7 @@ export default function SpeedrunPage() {
               <div className="py-8">
                 <div className="text-6xl mb-4">⛷️</div>
                 <p className="text-ski-muted text-sm">
-                  Andrew Chen&apos;s best: <span className="text-ski-orange font-bold">10.00s</span>
+                  Andrew Chen&apos;s best: <span className="text-ski-orange font-bold">69.00s</span>
                 </p>
               </div>
               <button
@@ -117,7 +86,7 @@ export default function SpeedrunPage() {
             <SkiGame
               onWin={handleWin}
               onCrash={handleCrash}
-              targetTime={10}
+              targetTime={69}
             />
           )}
 

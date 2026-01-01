@@ -1,5 +1,7 @@
 'use client'
 
+import { share, getPageUrl } from '@/lib/share'
+
 interface FortuneCardProps {
   fortune: {
     fortune: string
@@ -11,22 +13,9 @@ interface FortuneCardProps {
 }
 
 export function FortuneCard({ fortune, onReset }: FortuneCardProps) {
-  const shareText = `The Onsen Oracle spoke: "${fortune.fortune}" My element is ${fortune.element}. What's your 2026 fortune?`
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : ''
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      await navigator.share({
-        title: 'The Onsen Oracle',
-        text: shareText,
-        url: shareUrl,
-      })
-    } else {
-      window.open(
-        `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
-        '_blank'
-      )
-    }
+  const handleShare = () => {
+    const text = `The Onsen Oracle spoke: "${fortune.fortune}" My element is ${fortune.element}. What's your 2026 fortune?`
+    share('The Onsen Oracle', text, getPageUrl())
   }
 
   return (

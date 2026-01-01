@@ -1,19 +1,19 @@
 'use client'
 
+import { shareToTwitter, getPageUrl } from '@/lib/share'
+
 interface GameOverProps {
   time: number
   onPlayAgain: () => void
 }
 
 export function GameOver({ time, onPlayAgain }: GameOverProps) {
-  const shareOnTwitter = () => {
-    const text = `I survived ${time.toFixed(2)}s in A16Z Speedrun but Andrew Chen still has me beat. Can you do better? ⛷️🌲`
-    const url = typeof window !== 'undefined' ? window.location.href : ''
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
-    window.open(twitterUrl, '_blank', 'width=550,height=420')
+  const handleShare = () => {
+    const text = `I survived ${time.toFixed(2)}s in A16Z Speedrun but Andrew Chen still has me beat. Can you do better?`
+    shareToTwitter(text, getPageUrl())
   }
 
-  const percentComplete = Math.min((time / 10) * 100, 100).toFixed(0)
+  const percentComplete = Math.min((time / 69) * 100, 100).toFixed(0)
 
   return (
     <div className="fortune-reveal text-center">
@@ -38,7 +38,7 @@ export function GameOver({ time, onPlayAgain }: GameOverProps) {
             />
           </div>
           <p className="text-ski-muted text-xs mt-2">
-            Target: 10.00s
+            Target: 69.00s
           </p>
         </div>
       </div>
@@ -52,7 +52,7 @@ export function GameOver({ time, onPlayAgain }: GameOverProps) {
           Try Again
         </button>
         <button
-          onClick={shareOnTwitter}
+          onClick={handleShare}
           className="btn-ski-secondary flex-1 flex items-center justify-center gap-2"
         >
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

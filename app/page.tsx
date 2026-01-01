@@ -1,46 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { FortuneCard } from '@/components/FortuneCard'
-
-function SteamEffect() {
-  const [particles, setParticles] = useState<Array<{
-    id: number
-    left: number
-    size: number
-    delay: number
-    duration: number
-  }>>([])
-
-  useEffect(() => {
-    const newParticles = Array.from({ length: 25 }, (_, i) => ({
-      id: i,
-      left: Math.random() * 100,
-      size: 30 + Math.random() * 60,
-      delay: Math.random() * 8,
-      duration: 8 + Math.random() * 6,
-    }))
-    setParticles(newParticles)
-  }, [])
-
-  return (
-    <div className="steam-container">
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          className="steam-particle"
-          style={{
-            left: `${p.left}%`,
-            width: `${p.size}px`,
-            height: `${p.size}px`,
-            animationDelay: `${p.delay}s`,
-            animationDuration: `${p.duration}s`,
-          }}
-        />
-      ))}
-    </div>
-  )
-}
+import { ParticleEffect } from '@/components/ParticleEffect'
 
 export default function Home() {
   const [fortune, setFortune] = useState<{
@@ -72,7 +34,14 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4 py-12 relative">
-      <SteamEffect />
+      <ParticleEffect
+        count={25}
+        direction="up"
+        sizeRange={[30, 90]}
+        durationRange={[8, 14]}
+        className="steam-particle"
+        containerClassName="steam-container"
+      />
       <div className="water-surface" />
 
       <div className="w-full max-w-md mx-auto relative z-10">
